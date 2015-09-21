@@ -1,0 +1,43 @@
+<!doctype html>
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="//oss.maxcdn.com/semantic-ui/2.0.8/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+body {
+  /*background-color: #EFEFEF;*/
+  margin-top: 3em;
+}
+.column {
+  max-width: 450px;
+}
+</style>
+<body>
+<h2 class="ui center aligned purple icon header">
+  <i class="circular phone icon"></i>
+  ＊ telephone-scheduler ＊
+</h2>
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <form class="ui large form" action="login" method="post">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <input type="submit" class="ui fluid large purple submit button" value="Login">
+      </div>
+    </form>
+    {% if error %}
+    <div class="ui error message">{{ error }}</div>
+    {% endif %}
+  </div>
+</div>
+</body>

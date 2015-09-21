@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block title %}
+Users
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block body %}
+<table class="ui pink striped table">
+  <thead>
+    <tr>
+      <th>参加者名</th>
+      <th>メールアドレス</th>
+      <th>電話番号</th>
+      <th>管理者</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      {% if session.is_admin or session.username == user.username %}
+      <td><a href="/user/{{ user.username }}">{{ user.username }}</a></td>
+      {% else %}
+      <td>{{ user.username }}</td>
+      {% endif %}
+      <td>{{ user.mailaddr }}</td>
+      <td>{{ user.telno }}</td>
+      {% if user.is_admin %}
+      <td><i class="large green checkmark icon"></i></td>
+      {% else %}
+      <td></td>
+      {% endif %}
+      <td>
+        {% if session.is_admin %}
+        <a class="ui icon red button" onclick="delete_user('{{ user.username }}')">
+          <i class="trash icon"></i>
+        </a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if session.is_admin %}
+<form class="ui form" action="/user" method="post">
+<div class="two fields">
+  <div class="field">
+    <div class="ui input">
+      <input type="text" name="username" placeholder="New UserName">
+    </div>
+  </div>
+  <div class="two wide field">
+    <div class="ui input">
+      <input type="submit" class="ui primary button" value="参加者追加">
+    </div>
+  </div>
+</div>
+</form>
+{% endif %}
+<div class="ui small modal">
+  <div class="header">参加者を削除してよろしいですか？</div>
+  <div class="actions">
+    <div class="ui approve primary button">はい</div>
+    <div class="ui cancel button">いいえ</div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+{% if session.is_admin %}
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endif %}
+{% endblock %}
