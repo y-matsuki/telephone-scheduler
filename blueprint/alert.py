@@ -8,6 +8,7 @@ from passlib.apps import custom_app_context as pwd_context
 
 from common import db
 
+import sys, traceback
 import common, pymongo, json
 
 bp_alert = Blueprint('bp_alert', __name__,
@@ -23,8 +24,15 @@ def alert():
 @bp_alert.route('', methods=['POST'])
 def add_alert():
     json_data = json.loads(request.data)
-    print(json_data)
-    db.alerts.insert(json_data)
+    # if json_data['Type'] == 'SubscriptionConfirmation':
+    #     subscribe_url = json_data['SubscribeURL']
+    print(json.dumps(json_data))
+    try:
+        db.alerts.insert(json_data)
+    except:
+        print "Exception in user code:"
+        traceback.print_exc(file=sys.stdout)
+
     return dumps('ok')
 
 
