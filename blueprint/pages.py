@@ -56,3 +56,8 @@ def valid_login(username, password):
 
         return True
     return False
+
+
+@pages.route('/howto')
+def howto():
+    return render_template('howto.html')

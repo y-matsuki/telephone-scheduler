@@ -8,8 +8,8 @@ Users
 <table class="ui pink striped table">
   <thead>
     <tr>
-      <th>参加者名</th>
-      <th>メールアドレス</th>
+      <th>順序</th>
+      <th>名前</th>
       <th>電話番号</th>
       <th>管理者</th>
       <th></th>
@@ -18,12 +18,12 @@ Users
   <tbody>
     {% for user in users %}
     <tr>
+      <td>{{ user.order }}</td>
       {% if session.is_admin or session.username == user.username %}
       <td><a href="/user/{{ user.username }}">{{ user.username }}</a></td>
       {% else %}
       <td>{{ user.username }}</td>
       {% endif %}
-      <td>{{ user.mailaddr }}</td>
       <td>{{ user.telno }}</td>
       {% if user.is_admin %}
       <td><i class="large green checkmark icon"></i></td>

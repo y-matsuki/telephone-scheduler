@@ -17,17 +17,17 @@ sudo pip install pymongo
 sudo pip install passlib
 
 # insert initial data
-git clone https://github.com/y-matsuki/flask-webapp-sample.git
-cd flask-webapp-sample
+git clone https://github.com/y-matsuki/telephone-scheduler.git
+cd telephone-scheduler
 python scripts/init_mongodb.py
 
 # reverse proxy
 sudo yum install -y nginx
-sudo rm /etc/nginx/conf.d/reco-study.conf
+sudo rm /etc/nginx/conf.d/telephone-scheduler.conf
 echo "server {
     listen 80;
     location / {
         proxy_pass http://localhost:5000;
     }
-}" | sudo tee -a /etc/nginx/conf.d/reco-study.conf
+}" | sudo tee -a /etc/nginx/conf.d/telephone-scheduler.conf
 sudo service nginx restart

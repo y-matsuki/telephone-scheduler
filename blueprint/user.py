@@ -7,7 +7,7 @@ from passlib.apps import custom_app_context as pwd_context
 
 from common import db
 
-import common
+import common, pymongo
 
 bp_user = Blueprint('bp_user', __name__,
                 template_folder='templates')
@@ -16,7 +16,7 @@ bp_user = Blueprint('bp_user', __name__,
 @bp_user.route('/<username>')
 def user(username=None):
     if username == None and 'username' in session:
-        users = db.users.find()
+        users = list(db.users.find().sort('order', pymongo.ASCENDING))
         return render_template('users.html', users=users)
     else:
         if session['username'] == username or session['is_admin']:
@@ -39,7 +39,8 @@ def add_user():
                     "mailaddr": "user@example.com",
                     "telno": "+819012345678",
                     "color": "#2ca9e1",
-                    "is_admin": False
+                    "is_admin": False,
+                    "order": 99
                 }
                 db.users.update_one({"username":username}, {"$set": user}, upsert=True)
                 return redirect('/user/%s' % username)
@@ -56,6 +57,7 @@ def update_user(username=None):
         user['mailaddr'] = request.form['mailaddr']
         user['telno'] = request.form['telno']
         user['color'] = request.form['color']
+        user['order'] = int(request.form['order'])
         if request.form.has_key('is_admin'):
             user['is_admin'] = True
         else:
@@ -66,7 +68,6 @@ def update_user(username=None):
 
 @bp_user.route('/<username>', methods=['DELETE'])
 def delete_user(username=None):
-    print(username)
     if 'username' in session and username != None:
         user = db.users.find_one({"username":username})
         if user:

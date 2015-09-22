@@ -7,14 +7,28 @@ Home
 {% endblock %}
 {% block body %}
 <h4 class="ui teal horizontal divider header">
-  <i class="phone icon"></i>
+  <i class="announcement icon"></i>
   本日の当番
 </h4>
 
 <div class="ui teal segment">
-  <h4 class="ui left floated header">
-    {{ next_user.username }}
-  </h4>
+  <div class="ui three steps">
+    {% for user in today_users %}
+    {% if loop.first %}
+    <div class="active step">
+      <i class="phone teal icon"></i>
+    {% else %}
+    <div class="disabled step">
+      <i class="phone icon"></i>
+    {% endif %}
+      <div class="content">
+        <div class="title">{{ user.username }}</div>
+        <div class="description">{{ user.telno }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
 </div>
 
 <h4 class="ui green horizontal divider header">

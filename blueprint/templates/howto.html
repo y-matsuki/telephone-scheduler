@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block body %}
+<h4 class="ui green horizontal divider header">
+  <i class="book icon"></i>
+  使い方
+</h4>
+
+<div class="ui teal segment">
+  <h4 class="ui header">トップ画面</h4>
+  <p>画面上部に本日の「当番」が表示されます。<b>左から順番に</b>電話をかけてください。</p>
+  <p>その下には今月の当番表を表示しています。「不在予定」を入れる事で担当を変える事ができます。</p>
+</div>
+
+<div class="ui blue segment">
+  <h4 class="ui header">不在予定画面</h4>
+  <p>不在予定を表示します。</p>
+  <p>休暇などで電話に出られない場合はここに登録しておくとその期間は当番から外されます。</p>
+</div>
+
+<div class="ui purple segment">
+  <h4 class="ui header">メンバー画面</h4>
+  <p>メンバーの一覧を表示します。</p>
+  <p>パスワード、電話番号、順序の設定はこちらから行ってください。</p>
+</div>
+
+<div class="ui segment">
+  <h4 class="ui header">その他</h4>
+  <p>不具合や改善要望などありましたら下記メールアドレスまでお問い合わせください。</p>
+  <p>
+    <a href="mailto:yuto.matsuki@recochoku.co.jp?subject=当番表アプリについての問い合わせ ({{ session.username }})">
+      yuto.matsuki@recochoku.co.jp
+    </a>
+  </p>
+</div>
+{% endblock %}
+{% block script %}
+{% endblock %}
