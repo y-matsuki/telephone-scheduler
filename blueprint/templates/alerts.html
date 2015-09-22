@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}
+Alerts
+{% endblock %}
+{% block style %}
+{% endblock %}
+{% block body %}
+<h4 class="ui red horizontal divider header">
+  <i class="bomb icon"></i>
+  通知
+</h4>
+<div class="ui red segment">
+  {% if alerts|length == 0 %}
+  <p>通知はありません</p>
+  {% else %}
+  {% for alert in alerts %}
+  <p>{{ alert }}</p>
+  {% if session.is_admin %}
+  <a class="ui icon right floated red button" onclick="delete_alert('{{ alert._id }}')">
+    <i class="trash icon"></i>
+  </a>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+</div>
+<div class="ui small delete modal">
+  <div class="header">アラートを削除してよろしいですか？</div>
+  <div class="actions">
+    <div class="ui approve primary button">はい</div>
+    <div class="ui cancel button">いいえ</div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/alert.js') }}"></script>
+{% endblock %}

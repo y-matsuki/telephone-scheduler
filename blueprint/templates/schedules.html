@@ -13,38 +13,6 @@ Schedule
 <div class="ui green segment">
   <div id='calendar'></div>
 </div>
-<!-- <table class="ui violet striped table">
-  <thead>
-    <tr>
-      <th>名前</th>
-      <th>開始日</th>
-      <th>終了日</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% if schedules|length == 0 %}
-    <tr>
-      <td>予定はありません</td>
-    </tr>
-    {% else %}
-    {% for schedule in schedules %}
-    <tr title="{{ schedule.memo }}">
-      <td>{{ schedule.user }}</td>
-      <td>{{ schedule.from_date }}</td>
-      <td>{{ schedule.to_date }}</td>
-      <td>
-        <a class="ui icon red button" onclick="delete_schedule('{{ schedule._id }}')">
-          <i class="trash icon"></i>
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-    {% endif %}
-  </tbody>
-</table>
-{% if session.is_admin %}
-{% endif %} -->
 <div class="ui small add modal">
   <div class="header">予定を追加</div>
   <div class="content">

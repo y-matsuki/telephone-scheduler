@@ -12,6 +12,7 @@ from blueprint.home import bp_home
 from blueprint.user import bp_user
 from blueprint.schedule import bp_schedule
 from blueprint.event import bp_event
+from blueprint.alert import bp_alert
 
 app = Flask(__name__)
 app.register_blueprint(pages)
@@ -19,6 +20,7 @@ app.register_blueprint(bp_home, url_prefix='/home')
 app.register_blueprint(bp_user, url_prefix='/user')
 app.register_blueprint(bp_schedule, url_prefix='/schedule')
 app.register_blueprint(bp_event, url_prefix='/event')
+app.register_blueprint(bp_alert, url_prefix='/alert')
 
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
