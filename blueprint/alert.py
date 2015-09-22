@@ -8,7 +8,7 @@ from passlib.apps import custom_app_context as pwd_context
 
 from common import db
 
-import sys, traceback
+import sys, traceback, hashlib
 import common, pymongo, json
 
 bp_alert = Blueprint('bp_alert', __name__,
@@ -18,6 +18,9 @@ bp_alert = Blueprint('bp_alert', __name__,
 def alert():
     if 'username' in session:
         alerts = list(db.alerts.find().sort('Timestamp', pymongo.DESCENDING))
+        for alert in alerts:
+            if 'TopicArn' in alert:
+                alert['TopicArnHash'] = hashlib.md5(alert['TopicArn']).hexdigest()
         return render_template('alerts.html', alerts=alerts)
     return redirect('/home')
 

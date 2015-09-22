@@ -17,8 +17,8 @@ Alerts
   {% for alert in alerts %}
     <div class="comment">
       <a class="avatar">
-      <img title="{{ alert.TopicArn | replace('arn:aws:sns:ap-northeast-1:', '') }}"
-          src="//www.gravatar.com/avatar/{{ alert.TopicArn | replace('arn:aws:sns:ap-northeast-1:', '') }}?d=identicon">
+      <img title="{{ alert.TopicArn }}"
+          src="//www.gravatar.com/avatar/{{ alert.TopicArnHash }}?d=identicon">
       </a>
       <div class="content">
         <a class="author">{{ alert.Subject }}</a>
