@@ -13,14 +13,33 @@ Alerts
   {% if alerts|length == 0 %}
   <p>通知はありません</p>
   {% else %}
+  <div class="ui comments">
   {% for alert in alerts %}
-  <p>{{ alert }}</p>
-  {% if session.is_admin %}
-  <a class="ui icon right floated red button" onclick="delete_alert('{{ alert._id }}')">
-    <i class="trash icon"></i>
-  </a>
-  {% endif %}
+    <div class="comment">
+      <a class="avatar">
+      <img title="{{ alert.TopicArn | replace('arn:aws:sns:ap-northeast-1:', '') }}"
+          src="//www.gravatar.com/avatar/{{ alert.TopicArn | replace('arn:aws:sns:ap-northeast-1:', '') }}?d=identicon">
+      </a>
+      <div class="content">
+        <a class="author">{{ alert.Subject }}</a>
+        <div class="metadata">
+        <div class="date">{{ alert.Timestamp | replace('T', '  ') | replace('Z', '') }}</div>
+        </div>
+        <div class="text">
+        {{ alert.Message }}
+        </div>
+        {% if session.is_admin %}
+        <div class="actions">
+          <a onclick="delete_alert('{{ alert._id }}')">
+            <i class="trash icon"></i>
+            Delete
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
   {% endfor %}
+  </div>
   {% endif %}
 </div>
 <div class="ui small delete modal">

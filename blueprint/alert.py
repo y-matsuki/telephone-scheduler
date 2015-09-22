@@ -17,18 +17,21 @@ bp_alert = Blueprint('bp_alert', __name__,
 @bp_alert.route('')
 def alert():
     if 'username' in session:
-        alerts = list(db.alerts.find())
+        alerts = list(db.alerts.find().sort('Timestamp', pymongo.DESCENDING))
         return render_template('alerts.html', alerts=alerts)
+    return redirect('/home')
 
 
 @bp_alert.route('', methods=['POST'])
 def add_alert():
     json_data = json.loads(request.data)
-    if json_data['Type'] == 'SubscriptionConfirmation':
-        subscribe_url = json_data['SubscribeURL']
-        print(subscribe_url)
-    else:
-        del json_data['MessageAttributes']
+    if 'Type' in json_data:
+        if json_data['Type'] == 'SubscriptionConfirmation':
+            subscribe_url = json_data['SubscribeURL']
+            print(subscribe_url)
+            return dumps('ok')
+        if json_data['Type'] == 'Notification':
+            del json_data['MessageAttributes']
     print(json.dumps(json_data))
     try:
         db.alerts.insert(json_data)
