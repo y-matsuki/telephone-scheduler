@@ -35,7 +35,7 @@ def schedule():
 
 @bp_schedule.route('', methods=['POST'])
 def add_schedule():
-    if 'username' in session:
+    if 'username' in session and session['is_admin']:
         if request.form.has_key('from_date') and request.form['from_date']\
             and request.form.has_key('to_date') and request.form['to_date']:
             schedule = {
@@ -51,7 +51,7 @@ def add_schedule():
 
 @bp_schedule.route('/<schedule_id>', methods=['DELETE'])
 def delete_schedule(schedule_id=None):
-    if 'username' in session and schedule_id != None:
+    if 'username' in session and session['is_admin'] and schedule_id != None:
         schedule = db.schedules.find_one({"_id":ObjectId(schedule_id)})
         print(schedule)
         if schedule:
