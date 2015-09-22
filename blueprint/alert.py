@@ -8,6 +8,7 @@ from passlib.apps import custom_app_context as pwd_context
 from twilio.rest import TwilioRestClient
 
 from common import db
+from home import today_users
 
 import sys, traceback, hashlib, os
 import common, pymongo, json, urllib2
@@ -33,7 +34,6 @@ def add_alert():
         if json_data['Type'] == 'SubscriptionConfirmation':
             subscribe_url = json_data['SubscribeURL']
             print(subscribe_url)
-            return dumps('ok')
         if json_data['Type'] == 'Notification':
             del json_data['MessageAttributes']
     print(json.dumps(json_data))
@@ -58,11 +58,16 @@ def delete_alert(alert_id=None):
 
 
 def phone_call(message):
+    users = today_users()
+    if len(users) > 0:
+        to_number = users[0]['telno']
+    else:
+        return
     account_sid = os.environ.get('TWILIO_ACCOUNT_SID', '')
     auth_token = os.environ.get('TWILIO_AUTH_TOKEN', '')
     from_number = os.environ.get('TWILIO_NUMBER', '')
     client = TwilioRestClient(account_sid, auth_token)
-    twiml = '<Response><Say voice="woman" language="ja">' + message + '</Say></Response>'
+    twiml = '<Response><Say voice="woman" language="ja-JP" loop="2">' + message.encode('utf-8') + '</Say></Response>'
     url = 'http://twimlets.com/echo?Twiml=' + urllib2.quote(twiml)
-    call = client.calls.create(to="+818067689794", from_=from_number, url=url)
-    print call.sid
+    call = client.calls.create(to=to_number, from_=from_number, url=url)
+    print(call.sid)
