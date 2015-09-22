@@ -24,8 +24,11 @@ def alert():
 @bp_alert.route('', methods=['POST'])
 def add_alert():
     json_data = json.loads(request.data)
-    # if json_data['Type'] == 'SubscriptionConfirmation':
-    #     subscribe_url = json_data['SubscribeURL']
+    if json_data['Type'] == 'SubscriptionConfirmation':
+        subscribe_url = json_data['SubscribeURL']
+        print(subscribe_url)
+    else:
+        del json_data['MessageAttributes']
     print(json.dumps(json_data))
     try:
         db.alerts.insert(json_data)
