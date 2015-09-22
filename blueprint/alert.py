@@ -5,11 +5,12 @@ from flask import request, redirect, url_for
 from flask import render_template
 from flask import Blueprint, jsonify, session
 from passlib.apps import custom_app_context as pwd_context
+from twilio.rest import TwilioRestClient
 
 from common import db
 
-import sys, traceback, hashlib
-import common, pymongo, json
+import sys, traceback, hashlib, os
+import common, pymongo, json, urllib2
 
 bp_alert = Blueprint('bp_alert', __name__,
                 template_folder='templates')
@@ -38,10 +39,11 @@ def add_alert():
     print(json.dumps(json_data))
     try:
         db.alerts.insert(json_data)
+        if 'Message' in json_data:
+            phone_call(json_data['Message'])
     except:
         print "Exception in user code:"
         traceback.print_exc(file=sys.stdout)
-
     return dumps('ok')
 
 
@@ -53,3 +55,14 @@ def delete_alert(alert_id=None):
             db.alerts.delete_one(alert)
     alerts = list(db.alerts.find())
     return render_template('alerts.html', alerts=alerts)
+
+
+def phone_call(message):
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID', '')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN', '')
+    from_number = os.environ.get('TWILIO_NUMBER', '')
+    client = TwilioRestClient(account_sid, auth_token)
+    twiml = '<Response><Say voice="woman" language="ja">' + message + '</Say></Response>'
+    url = 'http://twimlets.com/echo?Twiml=' + urllib2.quote(twiml)
+    call = client.calls.create(to="+818067689794", from_=from_number, url=url)
+    print call.sid
