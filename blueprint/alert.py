@@ -8,7 +8,7 @@ from passlib.apps import custom_app_context as pwd_context
 from twilio.rest import TwilioRestClient
 
 from common import db
-from home import today_users
+from event import today_users
 
 import sys, traceback, hashlib, os
 import common, pymongo, json, urllib2

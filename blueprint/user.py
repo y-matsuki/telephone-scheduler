@@ -37,7 +37,7 @@ def add_user():
                     "username": username,
                     "password": pwd_context.encrypt("password"),
                     "mailaddr": "user@example.com",
-                    "telno": "+819012345678",
+                    "telno": "+818067689794",
                     "color": "#2ca9e1",
                     "is_admin": False,
                     "order": 99
