@@ -115,7 +115,6 @@ def non_scheduled_next_user(users, date, last_user_name):
             break # 予定がない場合は予定がないメンバを設定
         scheduled_list.append(user)
         last_user_name = user['username']
-    print str(date) + ': ' + user['username']
     return user
 
 
