@@ -5,7 +5,7 @@ User
 {% block body %}
 <form class="ui form" action="/user/{{ user.username }}" method="post">
   <div class="disabled field">
-    <label>参加者名</label>
+    <label>名前</label>
     <input type="hidden" name="username" value="{{ user.username }}">
     <input type="text" disabled placeholder="UserName" value="{{ user.username }}">
   </div>

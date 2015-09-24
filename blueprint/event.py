@@ -93,8 +93,6 @@ def insert_today():
             'start': start_date.strftime('%Y-%m-%d'),
             'color': user['color']
         }
-        print(event)
-        print('---')
         db.events.update_one({
             "start": start_date.strftime('%Y-%m-%d')
         }, {"$set": event}, upsert=True)
